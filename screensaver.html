@@ -1,0 +1,128 @@
+<html>
+<head>
+	<title>SCREEN SAVER</title>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+	<style type="text/css">
+	body{
+		margin: 0px;
+	}
+	.root{
+		margin: auto;
+		width:600px;
+		padding: 20px 20px;
+	}
+	.root label{
+		display: inline-block;
+		padding: 15px 5px;
+		font-weight: bold;
+		font-size: 18px;
+		color: #555;
+	}
+	#text{
+		padding: 15px 5px;
+		display: inline-block;
+	}
+	#submit{
+		padding: 8px 10px;
+		display: inline-block;
+		margin-top:-10px;
+	}
+	.options{
+		height: 100px;
+		background-color: #fff;
+	}
+	.color{
+		height: 100px;
+		text-align: center;
+		background-color: #07f;
+	}
+	.color > div{
+		padding: 10px;
+		font-weight: bold;
+		color: #fff;
+	}
+	.color input[type="color"]{
+		height: 60px;
+		width: 100%;
+	}
+	</style>
+</head>
+<body onresize="setSize()" onload="setSize()">
+	<div class="root">
+		<label>Enter your text:</label>
+		<input type="text" id="text"/>
+		<button class="btn btn-primary" id="submit">SCREEN SAVER</button>
+	</div>
+	<script>
+	var screenx=0;
+	var screeny=0;
+	var text="";
+	var tempx=0;
+	var tempy=0;
+	var checkx=true;
+	var checky=true;
+	//var color={"#000","#04f","#83f"};
+	$("#submit").click(function(){
+		text=$("#text").val();
+		if (text != "") {
+			animateNode="<div id='animate' style='position:absolute;padding:10px 5px;display:inline-block;top:10px;left:10px;font-size:35px;font-weight:bold;text-shadow:0px 0px 2px #444;'>"+ text +"</div>"
+			+"<div style='position:absolute;width:100px;height:100%;background-color:#fff;right:0px;-webkit-box-shadow:0px 0px 5px rgba(0,0,0,0.8);-moz-box-shadow:0px 0px 5px rgba(0,0,0,0.8);-o-box-shadow:0px 0px 5px rgba(0,0,0,0.8);-ms-box-shadow:0px 0px 5px rgba(0,0,0,0.8);box-shadow:0px 0px 5px rgba(0,0,0,0.8);'><div style='background-color:#444;color:#fff;font-weight:bold;font-size:20px;text-align:center;padding:8px;'>Apply</div><div class='options color'><div>COLOR</div><input type='color' onchange='setTextColor(this)'/></div><div class='options'></div><div class='options'></div></div>";
+			$("body").html(animateNode);
+			screenx=document.all[0].offsetWidth-$("#animate").width()-110;
+			screeny=document.all[0].offsetHeight-$("#animate").height()-20;
+		};
+	});
+	function setTextColor(node){
+		$("#animate").css({color:node.value});
+	}
+	setInterval(function(){
+		if((text != "") && (screenx > 0) && (screeny > 0)){
+			if(checkx){
+				tempx=tempx+1;
+				if(tempx >= screenx){
+					checkx=false;
+				}
+			}
+			else{
+				tempx=tempx-1;
+				if(tempx <= 0){
+					checkx=true;
+				}
+			}
+			if(checky){
+				tempy=tempy+1;
+				if(tempy >= screeny){
+					checky=false;
+				}
+			}
+			else{
+				tempy=tempy-1;
+				if(tempy <= 0){
+					checky=true;
+				}
+			}
+			if((tempx % 2) == 0){
+				$("#animate").css({left:""+tempx+"px",top:""+tempy+"px"});
+			}
+		}
+	},10);
+	function setSize(){
+		screenx=document.all[0].offsetWidth-$("#animate").width()-110;
+		screeny=document.all[0].offsetHeight-$("#animate").height()-20;
+	}
+	</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
